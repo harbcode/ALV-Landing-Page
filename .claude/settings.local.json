@@ -1,9 +1,0 @@
-{
-  "permissions": {
-    "allow": [
-      "Bash(python3:*)",
-      "WebFetch(domain:lmm-packstation-landing.vercel.app)",
-      "Bash(curl:*)"
-    ]
-  }
-}
