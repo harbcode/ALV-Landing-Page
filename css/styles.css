@@ -239,11 +239,14 @@ ul { list-style: none; }
   font-weight: var(--fw-semibold);
   color: var(--color-text-secondary);
 }
+.nav__mobile a.btn--primary {
+  color: #fff;
+}
 .nav__mobile.is-open { display: flex; }
 
 @media (max-width: 768px) {
   .nav__links, .nav__cta { display: none; }
-  .nav__burger { display: flex; }
+  .nav__burger { display: flex; margin-left: auto; }
 }
 
 /* ============================================================
@@ -256,9 +259,13 @@ ul { list-style: none; }
 .hero__inner {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  align-items: center;
+  grid-template-rows: auto auto;
+  gap: 2rem 4rem;
+  align-items: start;
 }
+.hero__content { grid-column: 1; grid-row: 1; }
+.hero__visual  { grid-column: 2; grid-row: 1 / 3; align-self: center; }
+.hero__ctas    { grid-column: 1; grid-row: 2; }
 .hero__badge { margin-bottom: 1.5rem; }
 .hero__headline {
   margin-bottom: 1.25rem;
@@ -292,6 +299,7 @@ ul { list-style: none; }
   display: flex;
   gap: 1rem;
   flex-wrap: wrap;
+  align-items: center;
 }
 
 /* Hero Visual */
@@ -335,9 +343,12 @@ ul { list-style: none; }
 @media (max-width: 768px) {
   .hero__inner {
     grid-template-columns: 1fr;
-    gap: 2.5rem;
+    grid-template-rows: auto;
+    gap: 2rem;
   }
-  .hero__visual { order: -1; }
+  .hero__content { grid-column: 1; grid-row: auto; order: 1; }
+  .hero__visual  { grid-column: 1; grid-row: auto; order: 2; }
+  .hero__ctas    { grid-column: 1; grid-row: auto; order: 3; }
   .hero__toast { bottom: -1rem; left: 0.5rem; }
 }
 
@@ -429,6 +440,12 @@ ul { list-style: none; }
 
 @media (max-width: 768px) {
   .comparison__body { grid-template-columns: 1fr; }
+  .comparison__label--before   { order: 1; }
+  .comparison__img-wrap--before { order: 2; }
+  .comparison__list--before    { order: 3; }
+  .comparison__label--after    { order: 4; }
+  .comparison__img-wrap--after { order: 5; }
+  .comparison__list--after     { order: 6; }
 }
 
 /* ============================================================
@@ -591,7 +608,7 @@ ul { list-style: none; }
     direction: ltr;
   }
   .prozess__step-alt__visual {
-    order: -1;
+    order: 1;
   }
   .prozess__steps-alt { gap: 3rem; }
 }
@@ -607,6 +624,12 @@ ul { list-style: none; }
   margin-bottom: 3.5rem;
 }
 .stats__header .pill { margin-bottom: 1rem; }
+.stats__subtitle {
+  margin-top: 0.5rem;
+  font-size: var(--fs-small);
+  font-weight: var(--fw-semibold);
+  color: var(--color-text-secondary);
+}
 
 .stats__grid {
   display: grid;
