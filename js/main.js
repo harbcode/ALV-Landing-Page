@@ -79,6 +79,83 @@
   });
 })();
 
+/* --- Video Gate ---------------------------------------------- */
+(function () {
+  const ACCESS_CODE = 'DEMO2025'; // Zugangscode hier ändern
+
+  const modal      = document.getElementById('vgateModal');
+  if (!modal) return;
+
+  const backdrop   = modal.querySelector('.vgate-modal__backdrop');
+  const closeBtn   = modal.querySelector('.vgate-modal__close');
+  const gateEl     = modal.querySelector('.vgate-modal__gate');
+  const videoEl    = modal.querySelector('.vgate-modal__video');
+  const preview    = modal.querySelector('.vgate-modal__preview');
+  const codeInput  = document.getElementById('vgateCode');
+  const submitBtn  = document.getElementById('vgateSubmit');
+  const errorEl    = document.getElementById('vgateError');
+  const player     = modal.querySelector('.vgate-modal__player');
+
+  let currentVideoSrc = '';
+
+  function openModal(gate) {
+    const src   = gate.dataset.video || '';
+    const alt   = gate.dataset.alt || '';
+    const img   = gate.querySelector('img');
+    currentVideoSrc = src;
+
+    preview.src = img ? img.src : '';
+    preview.alt = alt;
+    codeInput.value = '';
+    codeInput.classList.remove('is-error');
+    errorEl.hidden = true;
+    gateEl.hidden = false;
+    videoEl.hidden = true;
+    player.src = '';
+    modal.removeAttribute('hidden');
+    document.body.style.overflow = 'hidden';
+    setTimeout(() => codeInput.focus(), 50);
+  }
+
+  function closeModal() {
+    player.pause();
+    player.src = '';
+    modal.setAttribute('hidden', '');
+    document.body.style.overflow = '';
+  }
+
+  function tryCode() {
+    const entered = codeInput.value.trim().toUpperCase();
+    if (entered === ACCESS_CODE.toUpperCase()) {
+      gateEl.hidden = true;
+      videoEl.hidden = false;
+      player.src = currentVideoSrc;
+      player.play();
+    } else {
+      codeInput.classList.add('is-error');
+      errorEl.hidden = false;
+      codeInput.select();
+    }
+  }
+
+  // Play-Buttons in den Prozessschritten
+  document.querySelectorAll('.video-gate').forEach(gate => {
+    gate.querySelector('.video-gate__play').addEventListener('click', () => openModal(gate));
+  });
+
+  submitBtn.addEventListener('click', tryCode);
+  codeInput.addEventListener('keydown', e => { if (e.key === 'Enter') tryCode(); });
+  codeInput.addEventListener('input', () => {
+    codeInput.classList.remove('is-error');
+    errorEl.hidden = true;
+  });
+  closeBtn.addEventListener('click', closeModal);
+  backdrop.addEventListener('click', closeModal);
+  document.addEventListener('keydown', e => {
+    if (e.key === 'Escape' && !modal.hasAttribute('hidden')) closeModal();
+  });
+})();
+
 /* --- Smooth Scroll with Nav offset --------------------------- */
 (function () {
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
