@@ -79,6 +79,22 @@
   });
 })();
 
+/* --- Autoplay Videos on Scroll ------------------------------- */
+(function () {
+  const videos = document.querySelectorAll('.prozess__autoplay-video');
+  if (!videos.length) return;
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.play();
+      } else {
+        e.target.pause();
+      }
+    });
+  }, { threshold: 0.4 });
+  videos.forEach(v => observer.observe(v));
+})();
+
 /* --- Video Gate ---------------------------------------------- */
 (function () {
   const ACCESS_CODE = 'DEMO2025'; // Zugangscode hier ändern
